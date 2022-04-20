@@ -1,7 +1,18 @@
+:root {
+  --primary: #ffeb02;
+  --secondary: #8cd94c;
+  --tertiary: #00ba79;
+  --quaternary: #00958c;
+  --quinary: #006e80;
+  --senary: #2f4858;
+}
+
 body {
   margin: 0;
-  font-family: monospace;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .App {
@@ -13,9 +24,9 @@ body {
 }
 
 .DefaultAppBackGround {
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
+  animation: gradientBG 15s ease infinite; */
 }
 
 .AlertAppBackGround {
@@ -37,9 +48,13 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 32px;
-  font-weight: 700;
-  background-color: #ffffff;
+  font-weight: 900;
+  color: #ffffff;
+  background-color: var(--tertiary);
   border-radius: 20px;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.2);
+  min-width: 348px;
+  text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.2);
 }
 
 .Controller {
@@ -47,11 +62,12 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: var(--tertiary);
   border-radius: 20px;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
 .Controller > input {
@@ -60,19 +76,23 @@ body {
   font-size: 17px;
   font-weight: 600;
   cursor: pointer;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.2);
+  color: var(--senary);
 }
 
 .Controller > .Title {
   font-size: 24px;
   font-weight: 700;
   padding: 10px;
+  text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.2);
 }
 
 .Container > .Card {
-  margin: 20px;
+  margin: 10px;
   padding: 10px;
-
-  font-size: 28px;
+  text-shadow: none;
+  font-size: 24px;
   font-weight: 700;
 }
 
@@ -89,9 +109,74 @@ body {
 }
 
 .LeftWorkTime {
+  margin-top: 10px;
   padding: 10px;
-  background-color: #ffffff;
-
+  background-color: var(--tertiary);
+  border-radius: 10px;
+  color: #ffffff;
   font-size: 28px;
   font-weight: 700;
+}
+
+.custom-shape-divider-top-1650431498 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  animation: movement 6s ease infinite;
+}
+
+.custom-shape-divider-top-1650431498 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 80px;
+}
+
+.custom-shape-divider-top-1650431498 .shape-fill {
+  fill: #ffeb02;
+}
+
+.custom-shape-divider-bottom-1650431623 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+  animation: movement 8s ease infinite;
+}
+
+.custom-shape-divider-bottom-1650431623 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 51px;
+}
+
+.custom-shape-divider-bottom-1650431623 .shape-fill {
+  fill: var(--quaternary);
+}
+
+@keyframes movement {
+  0% {
+    width: 100%;
+  }
+
+  50% {
+    width: 150%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+.Layout {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }

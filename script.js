@@ -80,6 +80,9 @@ function getTime() {
       App.classList.toggle("DefaultAppBackGround");
       App.classList.toggle("AlertAppBackGround");
     }
+  } else {
+    if (App.classList.contains("AlertAppBackGround"))
+      App.classList.remove("AlertAppBackGround");
   }
   const Title = document.createElement("div");
   Title.innerText = "남은 시간 알려줘";
@@ -109,16 +112,21 @@ function setDangerBackGround() {
   } else {
     if (App.classList.contains("DarkAppBackGround"))
       App.classList.toggle("DarkAppBackGround");
-    if (!App.classList.contains("DefaultAppBackGround"))
-      App.classList.toggle("DefaultAppBackGround");
   }
+
   const nowDate = new Date();
+  const ifSettedTime = TimeInputElement.value;
+  console.log(ifSettedTime);
   const finDate = new Date(
     nowDate.getFullYear(),
     nowDate.getMonth(),
     nowDate.getDate(),
-    18,
-    00,
+    ifSettedTime === undefined || ifSettedTime === null
+      ? 18
+      : ifSettedTime.substring(0, 2),
+    ifSettedTime === undefined || ifSettedTime === null
+      ? 00
+      : ifSettedTime.substring(3),
     00
   );
   const diff = finDate - nowDate;
@@ -130,9 +138,13 @@ function setDangerBackGround() {
     2,
     "0"
   );
+  console.log(diffMin, diffHour);
   if (parseInt(diffMin) < 30 && parseInt(diffHour) < 1) {
     App.classList.toggle("DefaultAppBackGround");
     App.classList.toggle("DangerAppBackGround");
+  } else {
+    if (App.classList.contains("DangerAppBackGround"))
+      App.classList.remove("DangerAppBackGround");
   }
 }
 
@@ -149,7 +161,7 @@ function controllerInit() {
 
   const Title = document.createElement("div");
   Title.classList.add("Title");
-  Title.innerText = "퇴근시간 변경";
+  Title.innerText = "퇴근시간";
 
   Controller.appendChild(Title);
   Controller.appendChild(TimeInput);
