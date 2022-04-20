@@ -26,6 +26,10 @@ body {
   background-color: #ff0000;
 }
 
+.DarkAppBackGround {
+  background-color: #000000;
+}
+
 .Container {
   padding: 20px;
   display: flex;
@@ -36,6 +40,32 @@ body {
   font-weight: 700;
   background-color: #ffffff;
   border-radius: 20px;
+}
+
+.Controller {
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ffffff;
+  border-radius: 20px;
+}
+
+.Controller > input {
+  border: none;
+  border-radius: 5px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.Controller > .Title {
+  font-size: 24px;
+  font-weight: 700;
+  padding: 10px;
 }
 
 .Container > .Card {
@@ -56,4 +86,12 @@ body {
   100% {
     background-position: 0% 50%;
   }
+}
+
+.LeftWorkTime {
+  padding: 10px;
+  background-color: #ffffff;
+
+  font-size: 28px;
+  font-weight: 700;
 }

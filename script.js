@@ -1,3 +1,4 @@
+let darkFlag = false;
 function getTime() {
   const nowDate = new Date();
   time = nowDate.toLocaleTimeString();
@@ -7,15 +8,57 @@ function getTime() {
   const curTime = document.createElement("div");
   curTime.innerText = time;
   curTime.classList.add("Card");
+  const ifSettedTime = TimeInputElement.value;
   const finDate = new Date(
     nowDate.getFullYear(),
     nowDate.getMonth(),
     nowDate.getDate(),
-    18,
-    00,
+    ifSettedTime === undefined || ifSettedTime === null
+      ? 18
+      : ifSettedTime.substring(0, 2),
+    ifSettedTime === undefined || ifSettedTime === null
+      ? 00
+      : ifSettedTime.substring(3),
     00
   );
-  const diff = finDate - nowDate;
+  if (finDate < nowDate) {
+    darkFlag = true;
+    const curDiff = nowDate - finDate;
+    const diffHour = String(
+      Math.floor((curDiff / (1000 * 60 * 60)) % 24)
+    ).padStart(2, "0");
+    const diffMin = String(Math.floor((curDiff / (1000 * 60)) % 60)).padStart(
+      2,
+      "0"
+    );
+    const diffSec = String(Math.floor((curDiff / 1000) % 60)).padStart(2, "0");
+    const leftWorkStr = `${diffHour}:${diffMin}:${diffSec} 더 일하고 있습니다.`;
+
+    const LeftWorkTime = document.querySelector(".LeftWorkTime");
+    if (LeftWorkTime === null) {
+      const NewLeftWorkTime = document.createElement("div");
+      NewLeftWorkTime.classList.add("LeftWorkTime");
+      NewLeftWorkTime.innerText = leftWorkStr;
+      App.appendChild(NewLeftWorkTime);
+    } else {
+      LeftWorkTime.innerText = leftWorkStr;
+    }
+  } else {
+    darkFlag = false;
+    const LeftWorkTIme = document.querySelector(".LeftWorkTime");
+    if (LeftWorkTIme !== null) App.removeChild(LeftWorkTIme);
+  }
+  const diff =
+    finDate > nowDate
+      ? finDate - nowDate
+      : new Date(
+          finDate.getFullYear(),
+          finDate.getMonth(),
+          finDate.getDate() + 1,
+          finDate.getHours(),
+          finDate.getMinutes(),
+          finDate.getSeconds()
+        ) - nowDate;
   const diffHour = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(
     2,
     "0"
@@ -29,9 +72,8 @@ function getTime() {
   const leftTime = document.createElement("div");
   leftTime.innerText = leftTimeStr;
   leftTime.classList.add("Card");
-  const testDiffMin = diffMin - 10;
   if (parseInt(diffHour) < 1) {
-    if (parseInt(testDiffMin) < 30) {
+    if (parseInt(diffMin) < 30) {
       if (App.classList.contains("AlertAppBackGround"))
         App.classList.remove("AlertAppBackGround");
     } else {
@@ -51,7 +93,25 @@ const App = document.querySelector(".App");
 
 App.classList.add("DefaultAppBackGround");
 
+function setDarkBackground() {
+  if (App.classList.contains("DefaultAppBackGround"))
+    App.classList.toggle("DefaultAppBackGround");
+  if (App.classList.contains("DangerAppBackGround"))
+    App.classList.toggle("DangerAppBackGround");
+  if (!App.classList.contains("DarkAppBackGround"))
+    App.classList.toggle("DarkAppBackGround");
+}
+
 function setDangerBackGround() {
+  if (darkFlag) {
+    setDarkBackground();
+    return;
+  } else {
+    if (App.classList.contains("DarkAppBackGround"))
+      App.classList.toggle("DarkAppBackGround");
+    if (!App.classList.contains("DefaultAppBackGround"))
+      App.classList.toggle("DefaultAppBackGround");
+  }
   const nowDate = new Date();
   const finDate = new Date(
     nowDate.getFullYear(),
@@ -70,11 +130,30 @@ function setDangerBackGround() {
     2,
     "0"
   );
-  const testDiff = diffMin - 10;
-  if (parseInt(testDiff) < 30 && parseInt(diffHour) < 1) {
+  if (parseInt(diffMin) < 30 && parseInt(diffHour) < 1) {
     App.classList.toggle("DefaultAppBackGround");
     App.classList.toggle("DangerAppBackGround");
   }
 }
 
 setInterval(setDangerBackGround, 500);
+
+const Controller = document.querySelector(".Controller");
+
+function controllerInit() {
+  const hourList = Array.from({ length: 12 }, (_, i) => i + 1);
+  const minuteList = Array.from({ length: 60 }, (_, i) => i + 1);
+  const TimeInput = document.createElement("input");
+  TimeInput.type = "time";
+  TimeInput.value = "18:00";
+
+  const Title = document.createElement("div");
+  Title.classList.add("Title");
+  Title.innerText = "퇴근시간 변경";
+
+  Controller.appendChild(Title);
+  Controller.appendChild(TimeInput);
+  return TimeInput;
+}
+
+const TimeInputElement = controllerInit();
