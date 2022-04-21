@@ -80,6 +80,12 @@ function getTime() {
       App.classList.toggle("DefaultAppBackGround");
       App.classList.toggle("AlertAppBackGround");
     }
+    if (diffSec === "00" && Notification.permission === "granted") {
+      const notification = new Notification("알람", {
+        body: `${diffMin}분 남았습니다.`,
+        icon: "./resources/installer/Icon.ico",
+      });
+    }
   } else {
     if (App.classList.contains("AlertAppBackGround"))
       App.classList.remove("AlertAppBackGround");
@@ -169,3 +175,9 @@ function controllerInit() {
 }
 
 const TimeInputElement = controllerInit();
+
+Notification.requestPermission((permission) => {
+  if (permission === "granted") {
+    const notification = new Notification("Hello");
+  }
+});
